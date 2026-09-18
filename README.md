@@ -71,7 +71,6 @@ src/lib/                  Prisma client, sessão/JWT, utilitários
 npx vercel --prod
 ```
 
-O projeto já está linkado ao Vercel (pasta `.vercel/`, não versionada). Um
-push no GitHub não redeploya automaticamente ainda — a integração Git não
-pôde ser conectada automaticamente; para ativar deploy automático a cada
-push, rode `vercel git connect` ou conecte pelo painel da Vercel.
+O projeto já está linkado ao Vercel (pasta `.vercel/`, não versionada) e o
+repositório GitHub está conectado: todo push na branch `master` dispara um
+deploy de produção automático.
