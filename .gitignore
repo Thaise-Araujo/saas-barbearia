@@ -7,3 +7,9 @@ build
 *.db
 *.db-journal
 next-env.d.ts
+
+.vercel
+.env*
+.agents
+.claude
+skills-lock.json

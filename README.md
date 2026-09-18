@@ -20,10 +20,22 @@ administrativo e uma página pública de agendamento online.
 
 ## Stack
 
-Next.js 14 (App Router) + TypeScript + Tailwind CSS + Prisma + SQLite.
+Next.js 14 (App Router) + TypeScript + Tailwind CSS + Prisma + PostgreSQL (Neon).
 Autenticação própria via cookie httpOnly assinado com JWT (bcrypt para senhas).
 
-## Como rodar
+## Produção
+
+Em produção na Vercel: **https://saas-barbearia-gamma.vercel.app**
+
+- Painel de demonstração: **admin@barbearia.com** / **123456**
+- Página pública de exemplo: https://saas-barbearia-gamma.vercel.app/b/barbearia-modelo
+
+Banco de dados Postgres provisionado via integração Neon do marketplace da
+Vercel (projeto `thaise/saas-barbearia`). `DATABASE_URL` e `JWT_SECRET` ficam
+como variáveis de ambiente no projeto Vercel (Production/Preview/Development),
+nunca commitados.
+
+## Como rodar localmente
 
 ```bash
 npm install
@@ -32,10 +44,14 @@ npm run db:seed
 npm run dev
 ```
 
-Acesse http://localhost:3000
+Crie um `.env` local (não versionado) com:
 
-- Painel de demonstração: **admin@barbearia.com** / **123456**
-- Página pública de exemplo: http://localhost:3000/b/barbearia-modelo
+```
+DATABASE_URL="postgresql://..."   # string de conexão do seu Postgres (Neon, local, etc.)
+JWT_SECRET="um-valor-aleatorio-longo"
+```
+
+Acesse http://localhost:3000
 
 ## Estrutura
 
@@ -49,13 +65,13 @@ src/components/           Componentes compartilhados (shell do painel, formulár
 src/lib/                  Prisma client, sessão/JWT, utilitários
 ```
 
-## Produção
-
-Antes de publicar, troque o `JWT_SECRET` no `.env` por um valor aleatório e
-seguro, e troque o `DATABASE_URL` para um banco de produção (Postgres, por
-exemplo) caso o SQLite não seja suficiente.
+## Deploy
 
 ```bash
-npm run build
-npm start
+npx vercel --prod
 ```
+
+O projeto já está linkado ao Vercel (pasta `.vercel/`, não versionada). Um
+push no GitHub não redeploya automaticamente ainda — a integração Git não
+pôde ser conectada automaticamente; para ativar deploy automático a cada
+push, rode `vercel git connect` ou conecte pelo painel da Vercel.
